@@ -25,6 +25,7 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
     var topLabelEdited = false
     var bottomLabelEdited = false
 
+    //Resets view to original configuration
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         
         topLabel.endEditing(true)
@@ -42,7 +43,8 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
         
         super.viewWillAppear(animated)
         setKeyboardNotifications()
-        setUpTextfields()
+        formatTextfields(label: topLabel, text: Constants().TOP)
+        formatTextfields(label: bottomLabel, text: Constants().BOTTOM)
         
     }
     
@@ -57,18 +59,10 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
        setInitialStateOfButtons()
         
        setUpDelegates()
-
-
-
-       
-        
-
-
-        // Do any additional setup after loading the view, typically from a nib
         
     }
    
-    
+    //Sets intial button configuration
     private func setInitialStateOfButtons() {
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
         actionButton.isEnabled = false
@@ -79,30 +73,25 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
     let memeTextAttributes: [String: Any] = [
         NSStrokeColorAttributeName: UIColor.black,
         NSForegroundColorAttributeName: UIColor.white,
-        NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 50)!,
+        NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSStrokeWidthAttributeName: -3.0]
     
-    private func setUpTextfields() {
-        topLabel.defaultTextAttributes = memeTextAttributes
-        bottomLabel.defaultTextAttributes = memeTextAttributes
-        topLabel.text = Constants().TOP
-        bottomLabel.text = Constants().BOTTOM
-
-
-        topLabel.textAlignment = .center
-        bottomLabel.textAlignment = .center
-
-        topLabel.sizeToFit()
-        bottomLabel.sizeToFit()
-
+    
+    //Formats a textfield
+    private func formatTextfields(label: UITextField, text: String) {
+        label.defaultTextAttributes = memeTextAttributes
+        label.text = text
+        label.textAlignment = .center
     }
     
+    //Sets up the delegates
     private func setUpDelegates() {
         ImagePicker.delegate = self
         topLabel.delegate = self
         bottomLabel.delegate = self
     }
     
+    //Adds notifications to keyboard events
     private func setKeyboardNotifications() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: Notification.Name.UIKeyboardWillShow, object: nil)
@@ -110,12 +99,13 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     
-    
+    //Removes subscription to the notifications
     private func removeKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self,name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self,name: .UIKeyboardWillHide, object: nil)
     }
     
+    //Moves view when keyboar appears
     @objc private func keyboardWillShow(notification: Notification) {
         if self.view.frame.origin.y == 0 && !topLabel.isFirstResponder{
             self.view.frame.origin.y -= calculateKeyboardHeight(notification: notification)
@@ -123,7 +113,7 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
 
     }
     
-    
+    //Moves view when keyboard is disappears
     @objc private func keyboardWillHide(notification: Notification) {
         if self.view.frame.origin.y != 0{
             self.view.frame.origin.y += calculateKeyboardHeight(notification: notification)
@@ -131,12 +121,14 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
 
     }
     
+    //Calculates the height of the keyboard
     private func calculateKeyboardHeight(notification: Notification) -> CGFloat {
         let userInfo  = notification.userInfo!
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue ).cgRectValue
         return keyboardScreenEndFrame.height
     }
 
+    //Creates a meme
     private func generateMeme() -> UIImage {
         navBar.isHidden = true
         toolBar.isHidden = true
@@ -151,10 +143,8 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
         return memedImage
     }
     
+    //Brings up the activity view and passes the generated meme to it
     @IBAction func displayActivityView(_ sender: UIBarButtonItem) {
-        
-        
-        
 
         let meme = generateMeme()
         let controller = UIActivityViewController(activityItems: [meme], applicationActivities: nil)
@@ -168,11 +158,13 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
 
     }
     
+    //Saves the meme, though  at the moment it does not do anything, will be changed in the next version
     private func saveMeme(image: UIImage) {
-       // let meme = ImageModel(topLabel: topLabel.text!, bottomLabel: bottomLabel.text!, originalImage: ImageView.image!, memedImage: image)
+       _ = ImageModel(topLabel: topLabel.text!, bottomLabel: bottomLabel.text!, originalImage: ImageView.image!, memedImage: image)
         
     }
     
+    //Brings up the photo library
     @IBAction func displayPhotoLibrary(_ sender: UIBarButtonItem) {
     
         if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary)) {
@@ -186,7 +178,7 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     
-    
+    //Brings up the camera
     @IBAction func displayCamera(_ sender: UIBarButtonItem) {
 
         if(cameraButton.isEnabled) {
@@ -199,6 +191,7 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
      
     }
     
+    //Captures image that has been taken/chosen from camera or photo library
     func imagePickerController(_ picker: UIImagePickerController,didFinishPickingMediaWithInfo info: [String : Any]) {
         //print(info[UIImagePickerControllerOriginalImage] )
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
@@ -209,7 +202,7 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
         cancelButton.isEnabled = true
     }
 
-    
+    //Determines whether text in textfield has been edited or not. If it has not the text is cleared
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if (textField.tag == 0 && !topLabelEdited) {
             textField.text = ""
@@ -223,11 +216,14 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
         
     }
     
+    //clears text field
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         textField.text = ""
         return true
     }
     
+    
+    //Dismisses keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -236,8 +232,6 @@ class ImageMemeController: UIViewController, UIImagePickerControllerDelegate, UI
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        //NotificationCenter.default.removeObserver(self)
-        // Dispose of any resources that can be recreated.
         
     }
 

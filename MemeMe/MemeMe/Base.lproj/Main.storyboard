@@ -25,15 +25,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U1B-4X-jbd">
                                 <rect key="frame" x="-4" y="64" width="383" height="515"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="tBx-wU-xLm">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="tBx-wU-xLm">
                                 <rect key="frame" x="-4" y="99" width="383" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Yte-UF-5vu">
-                                <rect key="frame" x="36" y="514" width="343" height="30"/>
+                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Yte-UF-5vu">
+                                <rect key="frame" x="-4" y="514" width="383" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
@@ -90,7 +90,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="1Su-7n-hVk" secondAttribute="trailing" constant="-20" id="P0m-CH-hVj"/>
                             <constraint firstItem="1Su-7n-hVk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="UXp-zO-Fpo"/>
                             <constraint firstItem="U1B-4X-jbd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="VAt-xu-BZD"/>
-                            <constraint firstItem="Yte-UF-5vu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="X5E-jm-b7w"/>
+                            <constraint firstItem="Yte-UF-5vu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="X5E-jm-b7w"/>
                             <constraint firstItem="U1B-4X-jbd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="64" id="l4q-7i-NDi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="U1B-4X-jbd" secondAttribute="trailing" constant="-20" id="mRz-pX-IqC"/>
                             <constraint firstAttribute="bottom" secondItem="U1B-4X-jbd" secondAttribute="bottom" constant="88" id="q9E-5e-up7"/>
